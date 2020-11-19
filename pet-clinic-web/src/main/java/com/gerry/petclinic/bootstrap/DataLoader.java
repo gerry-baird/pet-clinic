@@ -1,6 +1,7 @@
 package com.gerry.petclinic.bootstrap;
 
 import com.gerry.petclinic.model.Owner;
+import com.gerry.petclinic.model.Pet;
 import com.gerry.petclinic.model.PetType;
 import com.gerry.petclinic.model.Vet;
 import com.gerry.petclinic.services.OwnerService;
@@ -8,6 +9,8 @@ import com.gerry.petclinic.services.PetTypeService;
 import com.gerry.petclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -37,18 +40,33 @@ public class DataLoader implements CommandLineRunner {
         Owner owner1 = new Owner();
         owner1.setFirstName("Michael");
         owner1.setLastName("Weston");
-//        owner1.setAddress("123 Brickerel");
-//        owner1.setCity("Miami");
-//        owner1.setTelephone("1231231234");
-        ownerService.save(owner1);
+        owner1.setAddress("123 Brickerel");
+        owner1.setCity("Miami");
+        owner1.setTelephone("1231231234");
 
+        Pet mikesPet = new Pet();
+        mikesPet.setPetType(savedDogPetType);
+        mikesPet.setOwner(owner1);
+        mikesPet.setBirthDate(LocalDate.now());
+        mikesPet.setName("Freddo");
+        owner1.getPets().add(mikesPet);
+
+        ownerService.save(owner1);
 
         Owner owner2 = new Owner();
         owner2.setFirstName("Fiona");
         owner2.setLastName("Glenanne");
-//        owner1.setAddress("123 Brickerel");
-//        owner1.setCity("Miami");
-//        owner1.setTelephone("1231231234");
+        owner2.setAddress("123 Brickerel");
+        owner2.setCity("Miami");
+        owner2.setTelephone("1231231234");
+
+        Pet fionasCat = new Pet();
+        fionasCat.setName("Luna");
+        fionasCat.setBirthDate(LocalDate.now());
+        fionasCat.setPetType(savedCatPetType);
+        fionasCat.setOwner(owner2);
+        owner2.getPets().add(fionasCat);
+
         ownerService.save(owner2);
 
         System.out.println("Loaded Owners");
