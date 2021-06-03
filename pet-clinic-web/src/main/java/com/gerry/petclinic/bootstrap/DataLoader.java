@@ -18,7 +18,9 @@ public class DataLoader implements CommandLineRunner {
 
 
     //These will now be autowired, even without the annotation
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtyService, VisitService visitService) {
+    public DataLoader(OwnerService ownerService, VetService vetService,
+                      PetTypeService petTypeService, SpecialtyService specialtyService,
+                      VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
@@ -29,6 +31,8 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        //Make sure we're only using this when there is no data already
+        //If connected to a db we don't need this
         int count = petTypeService.findAll().size();
         if(count == 0){
             loadData();
